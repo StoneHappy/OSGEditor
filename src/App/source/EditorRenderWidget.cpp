@@ -18,6 +18,9 @@
 #include <osg/ShapeDrawable>
 #include <osg/Material>
 #include <osgGA/TrackballManipulator>
+
+#include <Function/Scene/Viewer.h>
+#include <osg/Matrix>
 namespace Soarscape
 {
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
@@ -34,7 +37,7 @@ namespace Soarscape
 	{
         PublicSingleton<Engine>::getInstance().renderInitialize(this->x(), this->y(), this->width(), this->height());
         PublicSingleton<Engine>::getInstance().logicalInitialize();
-        //QtImGui::initialize(this);
+        QtImGui::initialize(this);
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
@@ -50,6 +53,7 @@ namespace Soarscape
         PublicSingleton<Engine>::getInstance().renderTick(defaultFramebufferObject());
         update();
         PublicSingleton<Engine>::getInstance().DeltaTime = timer.nsecsElapsed()* 1.0e-9f;
+        renderImGui();
 	}
 
 
@@ -107,7 +111,27 @@ namespace Soarscape
 
     void EditorRendererWidget::renderImGui()
     {
-        
+        QtImGui::newFrame();
+        ImGuizmo::BeginFrame();
+        ImGuizmo::SetOrthographic(false);
+        int x, y, width, height;
+        const QRect& geom = this->geometry();
+        x = geom.x();
+        y = geom.y();
+        width = geom.width();
+        height = geom.height();
+        ImGuizmo::SetRect(x, y, width, height);
+        osg::Matrixf view = PublicSingletonInstance(Viewer).getCamera()->getViewMatrix();
+        osg::Matrixf proj = PublicSingletonInstance(Viewer).getCamera()->getProjectionMatrix();
+        ImGuizmo::SetRect(x, y, width, height);
+        glm::mat4 testMatrix = glm::mat4(1);
+        ImGuizmo::ViewManipulate(view.ptr(), 8.f, ImVec2(x + width - width * 0.1, 0), ImVec2(width * 0.1, width * 0.1), 0x10101010);
+        ImGuizmo::Manipulate(view.ptr(), proj.ptr(), ImGuizmo::OPERATION::ROTATE, ImGuizmo::LOCAL, glm::value_ptr(testMatrix));
+        ImGui::Text("Hello");
+        ImGui::Render();
+        QtImGui::render();
+        PublicSingletonInstance(Viewer).getCamera()->setViewMatrix(view);
+        PublicSingletonInstance(Viewer).getCamera()->setProjectionMatrix(proj);
     }
     void EditorRendererWidget::importMesh(const std::string filename)
     {

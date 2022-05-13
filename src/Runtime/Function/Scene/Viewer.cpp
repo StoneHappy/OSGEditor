@@ -58,6 +58,11 @@ namespace Soarscape
         m_Viewer->getCamera()->setProjectionMatrixAsPerspective(30.f, aspectRatio, 1.f, 1000.f);
     }
 
+    osg::Camera* Viewer::getCamera()
+    {
+        return m_Viewer->getCamera();
+    }
+
     void Viewer::setupCommonGeode()
     {
         if (m_CommonGeode.get() == nullptr) return;

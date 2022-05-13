@@ -1,6 +1,7 @@
 #pragma once
 #include <osgViewer/Viewer>
 #include <Core/Base/PublicSingleton.h>
+#include <osg/Camera>
 namespace Soarscape
 {
 	class Viewer : public PublicSingleton<Viewer>
@@ -23,6 +24,8 @@ namespace Soarscape
 		void tick();
 
 		void resize(int x, int y, int width, int height);
+
+		osg::Camera* getCamera();
 	private:
 
 		void setupCommonGeode();
