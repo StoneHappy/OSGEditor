@@ -6,13 +6,6 @@ namespace Soarscape
 	Scene::Scene()
 	{
 	}
-	void Scene::renderTick()
-	{
-		
-	}
-	void Scene::initialize()
-	{
-	}
 	SceneObject Scene::CreateObject(const std::string& name)
 	{
 		SceneObject entity = { m_Registry.create(), this};

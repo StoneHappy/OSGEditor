@@ -12,9 +12,6 @@ namespace Soarscape
 		Scene();
 		~Scene() = default;
 
-        void renderTick();
-
-        void initialize();
 		SceneObject CreateObject(const std::string& name = std::string());
 	private:
 		entt::registry m_Registry;

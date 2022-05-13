@@ -22,14 +22,12 @@ namespace Soarscape
     }
     void Engine::renderTick(uint32_t defaultFramebufferid)
     { 
-        PublicSingleton<Scene>::getInstance().renderTick();
         PublicSingleton<Renderer>::getInstance().tick(defaultFramebufferid);
     }
 
     void Engine::renderInitialize(int x, int y, int width, int height)
     {
         PublicSingleton<Renderer>::getInstance().initialize(x, y, width, height);
-        PublicSingleton<Scene>::getInstance().initialize();
     }
     void Engine::logicalInitialize()
     {
