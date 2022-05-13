@@ -2,7 +2,6 @@
 #include <string>
 
 #include "Resource/Data/Interface/Mesh.h"
-#include "Resource/Data/Implement/VCG/VCGMesh.h"
 namespace Soarscape
 {
     template<typename T>

@@ -1,5 +1,8 @@
 #pragma once
 #include "Core/Base/PublicSingleton.h"
+
+#include <osgViewer/GraphicsWindow>
+#include <osgViewer/Viewer>
 namespace Soarscape
 {
 	class Renderer : public PublicSingleton<Renderer>
@@ -8,12 +11,14 @@ namespace Soarscape
 
 		Renderer();
 
-		void initialize();
-		void begin();
-		void end(uint32_t defaultFramebuffer);
+		void initialize(int x, int y, int width, int height);
+		void tick(uint32_t defaultFramebuffer);
+		void resize(int x, int y, int width, int height);
 	private:
+		osg::ref_ptr<osgViewer::GraphicsWindowEmbedded> m_GraphicsWindow;
+		osg::ref_ptr<osgViewer::Viewer> m_Viewer;
 
-
+		bool m_isFirstFrame = true;
 	};
 
 	

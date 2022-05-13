@@ -6,8 +6,6 @@
 
 #include "Function/Render/Renderer.h"
 
-#include "Resource/Data/Implement/VCG/VCGMesh.h"
-
 #include "Core/Base/macro.h"
 #include <thread>
 namespace Soarscape
@@ -24,19 +22,14 @@ namespace Soarscape
     }
     void Engine::renderTick(uint32_t defaultFramebufferid)
     { 
-        PublicSingleton<Renderer>::getInstance().begin();
         PublicSingleton<Scene>::getInstance().renderTick();
-        //_texture->bind(0);
-        //PublicSingleton<Renderer>::getInstance().render(vcgmesh);
-
-        PublicSingleton<Renderer>::getInstance().end(defaultFramebufferid);
+        PublicSingleton<Renderer>::getInstance().tick(defaultFramebufferid);
     }
 
-    void Engine::renderInitialize()
+    void Engine::renderInitialize(int x, int y, int width, int height)
     {
-        PublicSingleton<Renderer>::getInstance().initialize();
+        PublicSingleton<Renderer>::getInstance().initialize(x, y, width, height);
         PublicSingleton<Scene>::getInstance().initialize();
-        //_texture = Texture2D::create("D:/datas/ply/tayv6_2K_Albedo.png");
     }
     void Engine::logicalInitialize()
     {

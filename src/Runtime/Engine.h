@@ -20,7 +20,7 @@ namespace Soarscape
         void renderTick(uint32_t defaultFramebufferid);
 
         void shutdownEngine();
-        void renderInitialize();
+        void renderInitialize(int x, int y, int width, int height);
         void logicalInitialize();
 
         float DeltaTime = 0.0f; // seconds

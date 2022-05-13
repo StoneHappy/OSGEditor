@@ -2,11 +2,11 @@
 #include <qopenglwidget.h>
 #include <memory>
 #include <Function/Event/Input.h>
+
+#include <osgViewer/GraphicsWindow>
+#include <osgViewer/Viewer>
 namespace Soarscape
 {
-	class FrameBuffer;
-	class VertexArray;
-	class Shader;
 	class EditorRendererWidget : public QOpenGLWidget
 	{
 	public:
@@ -30,5 +30,9 @@ namespace Soarscape
 		void importMesh(const std::string filename);
 	private:
 		void renderImGui();
+        /*osg::ref_ptr<osgViewer::GraphicsWindowEmbedded> m_GraphicsWindow;
+        osg::ref_ptr<osgViewer::Viewer> m_Viewer;
+
+		bool m_isFirstFrame = true;*/
 	};
 }
