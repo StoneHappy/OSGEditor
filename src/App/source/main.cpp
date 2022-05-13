@@ -1,7 +1,7 @@
 #include <iostream>
-#include "Core/test.h"
+#include <Core/Base/macro.h>
+using namespace Soarscape;
 int main(int argc, char *argv[])
 {
-    test();
-    std::cout << "hello world!" << std::endl;
+	LOG_INFO("test")
 }
