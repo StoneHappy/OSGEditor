@@ -9455,7 +9455,7 @@ public:
     /**
      * @brief Constructs an identifier from its parts.
      *
-     * If the version part is not provided, a tombstone is returned.<br/>
+     * If the version part is not provided, a tombSoarscape is returned.<br/>
      * If the entity part is not provided, a null identifier is returned.
      *
      * @param entity The entity part of the identifier.
@@ -9588,12 +9588,12 @@ template<typename Entity>
     return !(other == entity);
 }
 
-/*! @brief Tombstone object for all identifiers.  */
-struct tombstone_t {
+/*! @brief TombSoarscape object for all identifiers.  */
+struct tombSoarscape_t {
     /**
-     * @brief Converts the tombstone object to identifiers of any type.
+     * @brief Converts the tombSoarscape object to identifiers of any type.
      * @tparam Entity Type of identifier.
-     * @return The tombstone representation for the given type.
+     * @return The tombSoarscape representation for the given type.
      */
     template<typename Entity>
     [[nodiscard]] constexpr operator Entity() const ENTT_NOEXCEPT {
@@ -9602,25 +9602,25 @@ struct tombstone_t {
     }
 
     /**
-     * @brief Compares two tombstone objects.
-     * @param other A tombstone object.
+     * @brief Compares two tombSoarscape objects.
+     * @param other A tombSoarscape object.
      * @return True in all cases.
      */
-    [[nodiscard]] constexpr bool operator==([[maybe_unused]] const tombstone_t other) const ENTT_NOEXCEPT {
+    [[nodiscard]] constexpr bool operator==([[maybe_unused]] const tombSoarscape_t other) const ENTT_NOEXCEPT {
         return true;
     }
 
     /**
-     * @brief Compares two tombstone objects.
-     * @param other A tombstone object.
+     * @brief Compares two tombSoarscape objects.
+     * @param other A tombSoarscape object.
      * @return False in all cases.
      */
-    [[nodiscard]] constexpr bool operator!=([[maybe_unused]] const tombstone_t other) const ENTT_NOEXCEPT {
+    [[nodiscard]] constexpr bool operator!=([[maybe_unused]] const tombSoarscape_t other) const ENTT_NOEXCEPT {
         return false;
     }
 
     /**
-     * @brief Compares a tombstone object and an identifier of any type.
+     * @brief Compares a tombSoarscape object and an identifier of any type.
      * @tparam Entity Type of identifier.
      * @param entity Identifier with which to compare.
      * @return False if the two elements differ, true otherwise.
@@ -9632,7 +9632,7 @@ struct tombstone_t {
     }
 
     /**
-     * @brief Compares a tombstone object and an identifier of any type.
+     * @brief Compares a tombSoarscape object and an identifier of any type.
      * @tparam Entity Type of identifier.
      * @param entity Identifier with which to compare.
      * @return True if the two elements differ, false otherwise.
@@ -9644,26 +9644,26 @@ struct tombstone_t {
 };
 
 /**
- * @brief Compares a tombstone object and an identifier of any type.
+ * @brief Compares a tombSoarscape object and an identifier of any type.
  * @tparam Entity Type of identifier.
  * @param entity Identifier with which to compare.
- * @param other A tombstone object yet to be converted.
+ * @param other A tombSoarscape object yet to be converted.
  * @return False if the two elements differ, true otherwise.
  */
 template<typename Entity>
-[[nodiscard]] constexpr bool operator==(const Entity entity, const tombstone_t other) ENTT_NOEXCEPT {
+[[nodiscard]] constexpr bool operator==(const Entity entity, const tombSoarscape_t other) ENTT_NOEXCEPT {
     return other.operator==(entity);
 }
 
 /**
- * @brief Compares a tombstone object and an identifier of any type.
+ * @brief Compares a tombSoarscape object and an identifier of any type.
  * @tparam Entity Type of identifier.
  * @param entity Identifier with which to compare.
- * @param other A tombstone object yet to be converted.
+ * @param other A tombSoarscape object yet to be converted.
  * @return True if the two elements differ, false otherwise.
  */
 template<typename Entity>
-[[nodiscard]] constexpr bool operator!=(const Entity entity, const tombstone_t other) ENTT_NOEXCEPT {
+[[nodiscard]] constexpr bool operator!=(const Entity entity, const tombSoarscape_t other) ENTT_NOEXCEPT {
     return !(other == entity);
 }
 
@@ -9677,13 +9677,13 @@ template<typename Entity>
 inline constexpr null_t null{};
 
 /**
- * @brief Compile-time constant for tombstone entities.
+ * @brief Compile-time constant for tombSoarscape entities.
  *
  * There exist implicit conversions from this variable to identifiers of any
  * allowed type. Similarly, there exist comparision operators between the
- * tombstone entity and any other identifier.
+ * tombSoarscape entity and any other identifier.
  */
-inline constexpr tombstone_t tombstone{};
+inline constexpr tombSoarscape_t tombSoarscape{};
 
 } // namespace entt
 
@@ -9968,7 +9968,7 @@ public:
     /**
      * @brief Constructs an identifier from its parts.
      *
-     * If the version part is not provided, a tombstone is returned.<br/>
+     * If the version part is not provided, a tombSoarscape is returned.<br/>
      * If the entity part is not provided, a null identifier is returned.
      *
      * @param entity The entity part of the identifier.
@@ -10101,12 +10101,12 @@ template<typename Entity>
     return !(other == entity);
 }
 
-/*! @brief Tombstone object for all identifiers.  */
-struct tombstone_t {
+/*! @brief TombSoarscape object for all identifiers.  */
+struct tombSoarscape_t {
     /**
-     * @brief Converts the tombstone object to identifiers of any type.
+     * @brief Converts the tombSoarscape object to identifiers of any type.
      * @tparam Entity Type of identifier.
-     * @return The tombstone representation for the given type.
+     * @return The tombSoarscape representation for the given type.
      */
     template<typename Entity>
     [[nodiscard]] constexpr operator Entity() const ENTT_NOEXCEPT {
@@ -10115,25 +10115,25 @@ struct tombstone_t {
     }
 
     /**
-     * @brief Compares two tombstone objects.
-     * @param other A tombstone object.
+     * @brief Compares two tombSoarscape objects.
+     * @param other A tombSoarscape object.
      * @return True in all cases.
      */
-    [[nodiscard]] constexpr bool operator==([[maybe_unused]] const tombstone_t other) const ENTT_NOEXCEPT {
+    [[nodiscard]] constexpr bool operator==([[maybe_unused]] const tombSoarscape_t other) const ENTT_NOEXCEPT {
         return true;
     }
 
     /**
-     * @brief Compares two tombstone objects.
-     * @param other A tombstone object.
+     * @brief Compares two tombSoarscape objects.
+     * @param other A tombSoarscape object.
      * @return False in all cases.
      */
-    [[nodiscard]] constexpr bool operator!=([[maybe_unused]] const tombstone_t other) const ENTT_NOEXCEPT {
+    [[nodiscard]] constexpr bool operator!=([[maybe_unused]] const tombSoarscape_t other) const ENTT_NOEXCEPT {
         return false;
     }
 
     /**
-     * @brief Compares a tombstone object and an identifier of any type.
+     * @brief Compares a tombSoarscape object and an identifier of any type.
      * @tparam Entity Type of identifier.
      * @param entity Identifier with which to compare.
      * @return False if the two elements differ, true otherwise.
@@ -10145,7 +10145,7 @@ struct tombstone_t {
     }
 
     /**
-     * @brief Compares a tombstone object and an identifier of any type.
+     * @brief Compares a tombSoarscape object and an identifier of any type.
      * @tparam Entity Type of identifier.
      * @param entity Identifier with which to compare.
      * @return True if the two elements differ, false otherwise.
@@ -10157,26 +10157,26 @@ struct tombstone_t {
 };
 
 /**
- * @brief Compares a tombstone object and an identifier of any type.
+ * @brief Compares a tombSoarscape object and an identifier of any type.
  * @tparam Entity Type of identifier.
  * @param entity Identifier with which to compare.
- * @param other A tombstone object yet to be converted.
+ * @param other A tombSoarscape object yet to be converted.
  * @return False if the two elements differ, true otherwise.
  */
 template<typename Entity>
-[[nodiscard]] constexpr bool operator==(const Entity entity, const tombstone_t other) ENTT_NOEXCEPT {
+[[nodiscard]] constexpr bool operator==(const Entity entity, const tombSoarscape_t other) ENTT_NOEXCEPT {
     return other.operator==(entity);
 }
 
 /**
- * @brief Compares a tombstone object and an identifier of any type.
+ * @brief Compares a tombSoarscape object and an identifier of any type.
  * @tparam Entity Type of identifier.
  * @param entity Identifier with which to compare.
- * @param other A tombstone object yet to be converted.
+ * @param other A tombSoarscape object yet to be converted.
  * @return True if the two elements differ, false otherwise.
  */
 template<typename Entity>
-[[nodiscard]] constexpr bool operator!=(const Entity entity, const tombstone_t other) ENTT_NOEXCEPT {
+[[nodiscard]] constexpr bool operator!=(const Entity entity, const tombSoarscape_t other) ENTT_NOEXCEPT {
     return !(other == entity);
 }
 
@@ -10190,13 +10190,13 @@ template<typename Entity>
 inline constexpr null_t null{};
 
 /**
- * @brief Compile-time constant for tombstone entities.
+ * @brief Compile-time constant for tombSoarscape entities.
  *
  * There exist implicit conversions from this variable to identifiers of any
  * allowed type. Similarly, there exist comparision operators between the
- * tombstone entity and any other identifier.
+ * tombSoarscape entity and any other identifier.
  */
-inline constexpr tombstone_t tombstone{};
+inline constexpr tombSoarscape_t tombSoarscape{};
 
 } // namespace entt
 
@@ -13035,7 +13035,7 @@ protected:
         // lazy self-assignment guard
         ref = null;
         // unnecessary but it helps to detect nasty bugs
-        ENTT_ASSERT((packed.back() = tombstone, true), "");
+        ENTT_ASSERT((packed.back() = tombSoarscape, true), "");
         packed.pop_back();
     }
 
@@ -13072,7 +13072,7 @@ protected:
         }
 
         auto &elem = sparse[page][fast_mod(pos, entity_traits::page_size)];
-        ENTT_ASSERT(entity_traits::to_version(elem) == entity_traits::to_version(tombstone), "Slot not available");
+        ENTT_ASSERT(entity_traits::to_version(elem) == entity_traits::to_version(tombSoarscape), "Slot not available");
 
         if(free_list == null) {
             elem = entity_traits::combine(static_cast<typename entity_traits::entity_type>(packed.size()), entity_traits::to_integral(entt));
@@ -13132,7 +13132,7 @@ public:
         : sparse{allocator},
           packed{allocator},
           info{&value},
-          free_list{tombstone},
+          free_list{tombSoarscape},
           mode{pol} {}
 
     /**
@@ -13143,7 +13143,7 @@ public:
         : sparse{std::move(other.sparse)},
           packed{std::move(other.packed)},
           info{other.info},
-          free_list{std::exchange(other.free_list, tombstone)},
+          free_list{std::exchange(other.free_list, tombSoarscape)},
           mode{other.mode} {}
 
     /**
@@ -13155,7 +13155,7 @@ public:
         : sparse{std::move(other.sparse), allocator},
           packed{std::move(other.packed), allocator},
           info{other.info},
-          free_list{std::exchange(other.free_list, tombstone)},
+          free_list{std::exchange(other.free_list, tombSoarscape)},
           mode{other.mode} {
         ENTT_ASSERT(alloc_traits::is_always_equal::value || packed.get_allocator() == other.packed.get_allocator(), "Copying a sparse set is not allowed");
     }
@@ -13177,7 +13177,7 @@ public:
         sparse = std::move(other.sparse);
         packed = std::move(other.packed);
         info = other.info;
-        free_list = std::exchange(other.free_list, tombstone);
+        free_list = std::exchange(other.free_list, tombSoarscape);
         mode = other.mode;
         return *this;
     }
@@ -13390,12 +13390,12 @@ public:
     /**
      * @brief Returns the contained version for an identifier.
      * @param entt A valid identifier.
-     * @return The version for the given identifier if present, the tombstone
+     * @return The version for the given identifier if present, the tombSoarscape
      * version otherwise.
      */
     [[nodiscard]] version_type current(const entity_type entt) const {
         const auto elem = sparse_ptr(entt);
-        constexpr auto fallback = entity_traits::to_version(tombstone);
+        constexpr auto fallback = entity_traits::to_version(tombSoarscape);
         return elem ? entity_traits::to_version(*elem) : fallback;
     }
 
@@ -13550,10 +13550,10 @@ public:
         return found;
     }
 
-    /*! @brief Removes all tombstones from the packed array of a sparse set. */
+    /*! @brief Removes all tombSoarscapes from the packed array of a sparse set. */
     void compact() {
         size_type next = packed.size();
-        for(; next && packed[next - 1u] == tombstone; --next) {}
+        for(; next && packed[next - 1u] == tombSoarscape; --next) {}
 
         for(auto *it = &free_list; *it != null && next; it = std::addressof(packed[entity_traits::to_entity(*it)])) {
             if(const size_type pos = entity_traits::to_entity(*it); pos < next) {
@@ -13563,11 +13563,11 @@ public:
                 const auto entity = static_cast<typename entity_traits::entity_type>(pos);
                 sparse_ref(packed[pos]) = entity_traits::combine(entity, entity_traits::to_integral(packed[pos]));
                 *it = entity_traits::combine(static_cast<typename entity_traits::entity_type>(next), entity_traits::reserved);
-                for(; next && packed[next - 1u] == tombstone; --next) {}
+                for(; next && packed[next - 1u] == tombSoarscape; --next) {}
             }
         }
 
-        free_list = tombstone;
+        free_list = tombSoarscape;
         packed.resize(next);
     }
 
@@ -13633,7 +13633,7 @@ public:
     template<typename Compare, typename Sort = std_sort, typename... Args>
     void sort_n(const size_type length, Compare compare, Sort algo = Sort{}, Args &&...args) {
         ENTT_ASSERT(!(length > packed.size()), "Length exceeds the number of elements");
-        ENTT_ASSERT(free_list == null, "Partial sorting with tombstones is not supported");
+        ENTT_ASSERT(free_list == null, "Partial sorting with tombSoarscapes is not supported");
 
         algo(packed.rend() - length, packed.rend(), std::move(compare), std::forward<Args>(args)...);
 
@@ -13707,7 +13707,7 @@ public:
     /*! @brief Clears a sparse set. */
     void clear() {
         for(auto &&entity: *this) {
-            // honor the modality and filter all tombstones
+            // honor the modality and filter all tombSoarscapes
             remove(entity);
         }
     }
@@ -16128,7 +16128,7 @@ class basic_storage: public basic_sparse_set<Entity, typename std::allocator_tra
     void release_all_pages() {
         for(size_type pos{}, last = base_type::size(); pos < last; ++pos) {
             if constexpr(comp_traits::in_place_delete) {
-                if(base_type::at(pos) != tombstone) {
+                if(base_type::at(pos) != tombSoarscape) {
                     std::destroy_at(std::addressof(element_at(pos)));
                 }
             } else {
@@ -22095,7 +22095,7 @@ namespace internal {
 template<typename Type, std::size_t Component, std::size_t Exclude>
 class view_iterator final {
     [[nodiscard]] bool valid() const {
-        return ((Component != 0u) || (*it != tombstone))
+        return ((Component != 0u) || (*it != tombSoarscape))
                && std::apply([entt = *it](const auto *...curr) { return (curr->contains(entt) && ...); }, pools)
                && std::apply([entt = *it](const auto *...curr) { return (!curr->contains(entt) && ...); }, filter);
     }
@@ -22281,7 +22281,7 @@ class basic_view<Entity, get_t<Component...>, exclude_t<Exclude...>> {
         for(const auto curr: std::get<Comp>(pools)->each()) {
             const auto entt = std::get<0>(curr);
 
-            if(((sizeof...(Component) != 1u) || (entt != tombstone))
+            if(((sizeof...(Component) != 1u) || (entt != tombSoarscape))
                && ((Comp == Index || std::get<Index>(pools)->contains(entt)) && ...)
                && std::apply([entt](const auto *...cpool) { return (!cpool->contains(entt) && ...); }, filter)) {
                 if constexpr(is_applicable_v<Func, decltype(std::tuple_cat(std::tuple<entity_type>{}, std::declval<basic_view>().get({})))>) {
@@ -23145,14 +23145,14 @@ class basic_registry {
     auto recycle_identifier() ENTT_NOEXCEPT {
         ENTT_ASSERT(free_list != null, "No entities available");
         const auto curr = entity_traits::to_entity(free_list);
-        free_list = entity_traits::combine(entity_traits::to_integral(entities[curr]), tombstone);
+        free_list = entity_traits::combine(entity_traits::to_integral(entities[curr]), tombSoarscape);
         return (entities[curr] = entity_traits::combine(curr, entity_traits::to_integral(entities[curr])));
     }
 
     auto release_entity(const Entity entity, const typename entity_traits::version_type version) {
-        const typename entity_traits::version_type vers = version + (version == entity_traits::to_version(tombstone));
+        const typename entity_traits::version_type vers = version + (version == entity_traits::to_version(tombSoarscape));
         entities[entity_traits::to_entity(entity)] = entity_traits::construct(entity_traits::to_integral(free_list), vers);
-        free_list = entity_traits::combine(entity_traits::to_integral(entity), tombstone);
+        free_list = entity_traits::combine(entity_traits::to_integral(entity), tombSoarscape);
         return vers;
     }
 
@@ -23335,12 +23335,12 @@ public:
     /**
      * @brief Returns the actual version for an identifier.
      * @param entity A valid identifier.
-     * @return The version for the given identifier if valid, the tombstone
+     * @return The version for the given identifier if valid, the tombSoarscape
      * version otherwise.
      */
     [[nodiscard]] version_type current(const entity_type entity) const {
         const auto pos = size_type(entity_traits::to_entity(entity));
-        return entity_traits::to_version(pos < entities.size() ? entities[pos] : tombstone);
+        return entity_traits::to_version(pos < entities.size() ? entities[pos] : tombSoarscape);
     }
 
     /**
@@ -23363,7 +23363,7 @@ public:
     [[nodiscard]] entity_type create(const entity_type hint) {
         const auto length = entities.size();
 
-        if(hint == null || hint == tombstone) {
+        if(hint == null || hint == tombSoarscape) {
             return create();
         } else if(const auto req = entity_traits::to_entity(hint); !(req < length)) {
             entities.resize(size_type(req) + 1u, null);
@@ -23750,9 +23750,9 @@ public:
     }
 
     /**
-     * @brief Removes all tombstones from a registry or only the pools for the
+     * @brief Removes all tombSoarscapes from a registry or only the pools for the
      * given components.
-     * @tparam Component Types of components for which to clear all tombstones.
+     * @tparam Component Types of components for which to clear all tombSoarscapes.
      */
     template<typename... Component>
     void compact() {
@@ -24426,7 +24426,7 @@ private:
     dense_hash_map<id_type, basic_any<0u>, identity> vars{};
     std::vector<group_data> groups{};
     std::vector<entity_type> entities{};
-    entity_type free_list{tombstone};
+    entity_type free_list{tombSoarscape};
 };
 
 } // namespace entt
@@ -26652,14 +26652,14 @@ class basic_registry {
     auto recycle_identifier() ENTT_NOEXCEPT {
         ENTT_ASSERT(free_list != null, "No entities available");
         const auto curr = entity_traits::to_entity(free_list);
-        free_list = entity_traits::combine(entity_traits::to_integral(entities[curr]), tombstone);
+        free_list = entity_traits::combine(entity_traits::to_integral(entities[curr]), tombSoarscape);
         return (entities[curr] = entity_traits::combine(curr, entity_traits::to_integral(entities[curr])));
     }
 
     auto release_entity(const Entity entity, const typename entity_traits::version_type version) {
-        const typename entity_traits::version_type vers = version + (version == entity_traits::to_version(tombstone));
+        const typename entity_traits::version_type vers = version + (version == entity_traits::to_version(tombSoarscape));
         entities[entity_traits::to_entity(entity)] = entity_traits::construct(entity_traits::to_integral(free_list), vers);
-        free_list = entity_traits::combine(entity_traits::to_integral(entity), tombstone);
+        free_list = entity_traits::combine(entity_traits::to_integral(entity), tombSoarscape);
         return vers;
     }
 
@@ -26842,12 +26842,12 @@ public:
     /**
      * @brief Returns the actual version for an identifier.
      * @param entity A valid identifier.
-     * @return The version for the given identifier if valid, the tombstone
+     * @return The version for the given identifier if valid, the tombSoarscape
      * version otherwise.
      */
     [[nodiscard]] version_type current(const entity_type entity) const {
         const auto pos = size_type(entity_traits::to_entity(entity));
-        return entity_traits::to_version(pos < entities.size() ? entities[pos] : tombstone);
+        return entity_traits::to_version(pos < entities.size() ? entities[pos] : tombSoarscape);
     }
 
     /**
@@ -26870,7 +26870,7 @@ public:
     [[nodiscard]] entity_type create(const entity_type hint) {
         const auto length = entities.size();
 
-        if(hint == null || hint == tombstone) {
+        if(hint == null || hint == tombSoarscape) {
             return create();
         } else if(const auto req = entity_traits::to_entity(hint); !(req < length)) {
             entities.resize(size_type(req) + 1u, null);
@@ -27257,9 +27257,9 @@ public:
     }
 
     /**
-     * @brief Removes all tombstones from a registry or only the pools for the
+     * @brief Removes all tombSoarscapes from a registry or only the pools for the
      * given components.
-     * @tparam Component Types of components for which to clear all tombstones.
+     * @tparam Component Types of components for which to clear all tombSoarscapes.
      */
     template<typename... Component>
     void compact() {
@@ -27933,7 +27933,7 @@ private:
     dense_hash_map<id_type, basic_any<0u>, identity> vars{};
     std::vector<group_data> groups{};
     std::vector<entity_type> entities{};
-    entity_type free_list{tombstone};
+    entity_type free_list{tombSoarscape};
 };
 
 } // namespace entt
@@ -29010,7 +29010,7 @@ protected:
         // lazy self-assignment guard
         ref = null;
         // unnecessary but it helps to detect nasty bugs
-        ENTT_ASSERT((packed.back() = tombstone, true), "");
+        ENTT_ASSERT((packed.back() = tombSoarscape, true), "");
         packed.pop_back();
     }
 
@@ -29047,7 +29047,7 @@ protected:
         }
 
         auto &elem = sparse[page][fast_mod(pos, entity_traits::page_size)];
-        ENTT_ASSERT(entity_traits::to_version(elem) == entity_traits::to_version(tombstone), "Slot not available");
+        ENTT_ASSERT(entity_traits::to_version(elem) == entity_traits::to_version(tombSoarscape), "Slot not available");
 
         if(free_list == null) {
             elem = entity_traits::combine(static_cast<typename entity_traits::entity_type>(packed.size()), entity_traits::to_integral(entt));
@@ -29107,7 +29107,7 @@ public:
         : sparse{allocator},
           packed{allocator},
           info{&value},
-          free_list{tombstone},
+          free_list{tombSoarscape},
           mode{pol} {}
 
     /**
@@ -29118,7 +29118,7 @@ public:
         : sparse{std::move(other.sparse)},
           packed{std::move(other.packed)},
           info{other.info},
-          free_list{std::exchange(other.free_list, tombstone)},
+          free_list{std::exchange(other.free_list, tombSoarscape)},
           mode{other.mode} {}
 
     /**
@@ -29130,7 +29130,7 @@ public:
         : sparse{std::move(other.sparse), allocator},
           packed{std::move(other.packed), allocator},
           info{other.info},
-          free_list{std::exchange(other.free_list, tombstone)},
+          free_list{std::exchange(other.free_list, tombSoarscape)},
           mode{other.mode} {
         ENTT_ASSERT(alloc_traits::is_always_equal::value || packed.get_allocator() == other.packed.get_allocator(), "Copying a sparse set is not allowed");
     }
@@ -29152,7 +29152,7 @@ public:
         sparse = std::move(other.sparse);
         packed = std::move(other.packed);
         info = other.info;
-        free_list = std::exchange(other.free_list, tombstone);
+        free_list = std::exchange(other.free_list, tombSoarscape);
         mode = other.mode;
         return *this;
     }
@@ -29365,12 +29365,12 @@ public:
     /**
      * @brief Returns the contained version for an identifier.
      * @param entt A valid identifier.
-     * @return The version for the given identifier if present, the tombstone
+     * @return The version for the given identifier if present, the tombSoarscape
      * version otherwise.
      */
     [[nodiscard]] version_type current(const entity_type entt) const {
         const auto elem = sparse_ptr(entt);
-        constexpr auto fallback = entity_traits::to_version(tombstone);
+        constexpr auto fallback = entity_traits::to_version(tombSoarscape);
         return elem ? entity_traits::to_version(*elem) : fallback;
     }
 
@@ -29525,10 +29525,10 @@ public:
         return found;
     }
 
-    /*! @brief Removes all tombstones from the packed array of a sparse set. */
+    /*! @brief Removes all tombSoarscapes from the packed array of a sparse set. */
     void compact() {
         size_type next = packed.size();
-        for(; next && packed[next - 1u] == tombstone; --next) {}
+        for(; next && packed[next - 1u] == tombSoarscape; --next) {}
 
         for(auto *it = &free_list; *it != null && next; it = std::addressof(packed[entity_traits::to_entity(*it)])) {
             if(const size_type pos = entity_traits::to_entity(*it); pos < next) {
@@ -29538,11 +29538,11 @@ public:
                 const auto entity = static_cast<typename entity_traits::entity_type>(pos);
                 sparse_ref(packed[pos]) = entity_traits::combine(entity, entity_traits::to_integral(packed[pos]));
                 *it = entity_traits::combine(static_cast<typename entity_traits::entity_type>(next), entity_traits::reserved);
-                for(; next && packed[next - 1u] == tombstone; --next) {}
+                for(; next && packed[next - 1u] == tombSoarscape; --next) {}
             }
         }
 
-        free_list = tombstone;
+        free_list = tombSoarscape;
         packed.resize(next);
     }
 
@@ -29608,7 +29608,7 @@ public:
     template<typename Compare, typename Sort = std_sort, typename... Args>
     void sort_n(const size_type length, Compare compare, Sort algo = Sort{}, Args &&...args) {
         ENTT_ASSERT(!(length > packed.size()), "Length exceeds the number of elements");
-        ENTT_ASSERT(free_list == null, "Partial sorting with tombstones is not supported");
+        ENTT_ASSERT(free_list == null, "Partial sorting with tombSoarscapes is not supported");
 
         algo(packed.rend() - length, packed.rend(), std::move(compare), std::forward<Args>(args)...);
 
@@ -29682,7 +29682,7 @@ public:
     /*! @brief Clears a sparse set. */
     void clear() {
         for(auto &&entity: *this) {
-            // honor the modality and filter all tombstones
+            // honor the modality and filter all tombSoarscapes
             remove(entity);
         }
     }
@@ -30010,7 +30010,7 @@ class basic_storage: public basic_sparse_set<Entity, typename std::allocator_tra
     void release_all_pages() {
         for(size_type pos{}, last = base_type::size(); pos < last; ++pos) {
             if constexpr(comp_traits::in_place_delete) {
-                if(base_type::at(pos) != tombstone) {
+                if(base_type::at(pos) != tombSoarscape) {
                     std::destroy_at(std::addressof(element_at(pos)));
                 }
             } else {
@@ -30925,7 +30925,7 @@ namespace internal {
 template<typename Type, std::size_t Component, std::size_t Exclude>
 class view_iterator final {
     [[nodiscard]] bool valid() const {
-        return ((Component != 0u) || (*it != tombstone))
+        return ((Component != 0u) || (*it != tombSoarscape))
                && std::apply([entt = *it](const auto *...curr) { return (curr->contains(entt) && ...); }, pools)
                && std::apply([entt = *it](const auto *...curr) { return (!curr->contains(entt) && ...); }, filter);
     }
@@ -31111,7 +31111,7 @@ class basic_view<Entity, get_t<Component...>, exclude_t<Exclude...>> {
         for(const auto curr: std::get<Comp>(pools)->each()) {
             const auto entt = std::get<0>(curr);
 
-            if(((sizeof...(Component) != 1u) || (entt != tombstone))
+            if(((sizeof...(Component) != 1u) || (entt != tombSoarscape))
                && ((Comp == Index || std::get<Index>(pools)->contains(entt)) && ...)
                && std::apply([entt](const auto *...cpool) { return (!cpool->contains(entt) && ...); }, filter)) {
                 if constexpr(is_applicable_v<Func, decltype(std::tuple_cat(std::tuple<entity_type>{}, std::declval<basic_view>().get({})))>) {

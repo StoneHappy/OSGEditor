@@ -582,7 +582,7 @@ namespace vcg
 			tobeupdated.reset();
 
 			//bool thereisreplicatedview = isThereAReplicatedPipelineView();
-			InternalRendAtts meaningfulrequiredbyatleastoneview;
+			InternalRendAtts meaningfulrequiredbyatleaSoarscapeview;
 			InternalRendAtts probabilyuseless;
 
 			for (typename ViewsMap::const_iterator it = _perviewreqatts.begin(); it != _perviewreqatts.end(); ++it)
@@ -593,24 +593,24 @@ namespace vcg
 					//by some other rendered primitive
 					//the vertindices is, as usual, a different case
 					if (it->second._intatts[size_t(pm)][INT_ATT_NAMES::ATT_VERTPOSITION])
-						meaningfulrequiredbyatleastoneview = InternalRendAtts::unionSet(meaningfulrequiredbyatleastoneview, it->second._intatts[size_t(pm)]);
+						meaningfulrequiredbyatleaSoarscapeview = InternalRendAtts::unionSet(meaningfulrequiredbyatleaSoarscapeview, it->second._intatts[size_t(pm)]);
 					else
 						probabilyuseless = InternalRendAtts::unionSet(probabilyuseless, it->second._intatts[size_t(pm)]);
 				}
 			}
-			bool thereisreplicatedview = InternalRendAtts::replicatedPipelineNeeded(meaningfulrequiredbyatleastoneview);
-			meaningfulrequiredbyatleastoneview[INT_ATT_NAMES::ATT_VERTINDICES] &= !thereisreplicatedview;
+			bool thereisreplicatedview = InternalRendAtts::replicatedPipelineNeeded(meaningfulrequiredbyatleaSoarscapeview);
+			meaningfulrequiredbyatleaSoarscapeview[INT_ATT_NAMES::ATT_VERTINDICES] &= !thereisreplicatedview;
 
-			InternalRendAtts reallyuseless = InternalRendAtts::complementSet(probabilyuseless, meaningfulrequiredbyatleastoneview);
+			InternalRendAtts reallyuseless = InternalRendAtts::complementSet(probabilyuseless, meaningfulrequiredbyatleaSoarscapeview);
 
 			bool switchreplicatedindexed = (!InternalRendAtts::replicatedPipelineNeeded(_currallocatedboatt) && thereisreplicatedview) || (InternalRendAtts::replicatedPipelineNeeded(_currallocatedboatt) && !thereisreplicatedview);
 
 			/*in some way the vertices number changed. If i use the indexed pipeline i have to deallocate/allocate/update the vertex indices*/
 			bool numvertchanged = boExpectedSize(INT_ATT_NAMES::ATT_VERTPOSITION, thereisreplicatedview) != _bo[INT_ATT_NAMES::ATT_VERTPOSITION]->_size;
-			bool vertindforcedupdate = numvertchanged && meaningfulrequiredbyatleastoneview[INT_ATT_NAMES::ATT_VERTINDICES];
+			bool vertindforcedupdate = numvertchanged && meaningfulrequiredbyatleaSoarscapeview[INT_ATT_NAMES::ATT_VERTINDICES];
 
-			InternalRendAtts probablytoallocate = InternalRendAtts::complementSet(meaningfulrequiredbyatleastoneview, _currallocatedboatt);
-			InternalRendAtts probablytodeallocate = InternalRendAtts::complementSet(_currallocatedboatt, meaningfulrequiredbyatleastoneview);
+			InternalRendAtts probablytoallocate = InternalRendAtts::complementSet(meaningfulrequiredbyatleaSoarscapeview, _currallocatedboatt);
+			InternalRendAtts probablytodeallocate = InternalRendAtts::complementSet(_currallocatedboatt, meaningfulrequiredbyatleaSoarscapeview);
 			for (unsigned int ii = 0; ii < INT_ATT_NAMES::enumArity(); ++ii)
 			{
 				INT_ATT_NAMES boname(ii);
@@ -626,24 +626,24 @@ namespace vcg
 						tobedeallocated[boname] = (notempty && !hasmeshattribute) ||
 							(notempty && probablytodeallocate[boname]) ||
 							(notempty && reallyuseless[boname]) ||
-							(notempty && (_bo[boname]->_size != sz) && meaningfulrequiredbyatleastoneview[boname]) ||
+							(notempty && (_bo[boname]->_size != sz) && meaningfulrequiredbyatleaSoarscapeview[boname]) ||
 							(notempty && (boname == INT_ATT_NAMES::ATT_VERTINDICES) && (vertindforcedupdate));
-						tobeallocated[boname] = (hasmeshattribute && (sz > 0) && (sz != _bo[boname]->_size) && meaningfulrequiredbyatleastoneview[boname]) ||
+						tobeallocated[boname] = (hasmeshattribute && (sz > 0) && (sz != _bo[boname]->_size) && meaningfulrequiredbyatleaSoarscapeview[boname]) ||
 							(hasmeshattribute && (sz > 0) && probablytoallocate[boname]) ||
 							(hasmeshattribute && (boname == INT_ATT_NAMES::ATT_VERTINDICES) && (vertindforcedupdate));
-						tobeupdated[boname] = tobeallocated[boname] || (hasmeshattribute && (sz > 0) && !(isvalid) && meaningfulrequiredbyatleastoneview[boname]);
+						tobeupdated[boname] = tobeallocated[boname] || (hasmeshattribute && (sz > 0) && !(isvalid) && meaningfulrequiredbyatleaSoarscapeview[boname]);
 					}
 					else
 					{
 						bool meshchanged = ((size_t(_mesh.FN()) != _meshtriangleswhenedgeindiceswerecomputed) || (size_t(_mesh.VN()) != _meshverticeswhenedgeindiceswerecomputed));
 						tobedeallocated[INT_ATT_NAMES::ATT_EDGEINDICES] = (notempty && !hasmeshattribute) ||
-							(notempty && !meaningfulrequiredbyatleastoneview[INT_ATT_NAMES::ATT_EDGEINDICES]) ||
+							(notempty && !meaningfulrequiredbyatleaSoarscapeview[INT_ATT_NAMES::ATT_EDGEINDICES]) ||
 							(notempty && !(isvalid) && meshchanged);
-						tobeallocated[INT_ATT_NAMES::ATT_EDGEINDICES] = (hasmeshattribute && meaningfulrequiredbyatleastoneview[INT_ATT_NAMES::ATT_EDGEINDICES] && !(isvalid) && (meshchanged)) ||
-							(hasmeshattribute && meaningfulrequiredbyatleastoneview[INT_ATT_NAMES::ATT_EDGEINDICES] && !(isvalid) && !(_currallocatedboatt[INT_ATT_NAMES::ATT_EDGEINDICES]));
+						tobeallocated[INT_ATT_NAMES::ATT_EDGEINDICES] = (hasmeshattribute && meaningfulrequiredbyatleaSoarscapeview[INT_ATT_NAMES::ATT_EDGEINDICES] && !(isvalid) && (meshchanged)) ||
+							(hasmeshattribute && meaningfulrequiredbyatleaSoarscapeview[INT_ATT_NAMES::ATT_EDGEINDICES] && !(isvalid) && !(_currallocatedboatt[INT_ATT_NAMES::ATT_EDGEINDICES]));
 						tobeupdated[INT_ATT_NAMES::ATT_EDGEINDICES] = tobeallocated[INT_ATT_NAMES::ATT_EDGEINDICES] ||
-							(hasmeshattribute && !(isvalid) && meaningfulrequiredbyatleastoneview[INT_ATT_NAMES::ATT_EDGEINDICES]) ||
-							(hasmeshattribute && switchreplicatedindexed && meaningfulrequiredbyatleastoneview[INT_ATT_NAMES::ATT_EDGEINDICES]);
+							(hasmeshattribute && !(isvalid) && meaningfulrequiredbyatleaSoarscapeview[INT_ATT_NAMES::ATT_EDGEINDICES]) ||
+							(hasmeshattribute && switchreplicatedindexed && meaningfulrequiredbyatleaSoarscapeview[INT_ATT_NAMES::ATT_EDGEINDICES]);
 					}
 				}
 				somethingtodo = somethingtodo || tobeallocated[boname] || tobedeallocated[boname] || tobeupdated[boname];

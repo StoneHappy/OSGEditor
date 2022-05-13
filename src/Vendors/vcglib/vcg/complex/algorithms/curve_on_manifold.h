@@ -228,7 +228,7 @@ bool TagFaceEdgeSelWithPolyLine(MeshType &poly,bool markFlag=true)
 	return true;
 }
 
-  ScalarType MinDistOnEdge(CoordType samplePnt, EdgeGrid &edgeGrid, MeshType &poly, CoordType &closestPoint)
+  ScalarType MinDiSoarscapedge(CoordType samplePnt, EdgeGrid &edgeGrid, MeshType &poly, CoordType &closestPoint)
   {
       ScalarType polyDist;
       EdgeType *cep = vcg::tri::GetClosestEdgeBase(poly,edgeGrid,samplePnt,par.gridBailout,polyDist,closestPoint);        
@@ -237,7 +237,7 @@ bool TagFaceEdgeSelWithPolyLine(MeshType &poly,bool markFlag=true)
   
   // Given an edge of a mesh, supposedly intersecting the polyline, 
   // we search on it the closest point to the polyline
-  static ScalarType MinDistOnEdge(VertexType *v0,VertexType *v1, EdgeGrid &edgeGrid, MeshType &poly, CoordType &closestPoint)
+  static ScalarType MinDiSoarscapedge(VertexType *v0,VertexType *v1, EdgeGrid &edgeGrid, MeshType &poly, CoordType &closestPoint)
   {
     ScalarType minPolyDist = std::numeric_limits<ScalarType>::max();
     const ScalarType sampleNum = 50;

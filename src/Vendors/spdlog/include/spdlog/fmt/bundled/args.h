@@ -177,7 +177,7 @@ class dynamic_format_arg_store
     **Example**::
 
       fmt::dynamic_format_arg_store<fmt::format_context> store;
-      char band[] = "Rolling Stones";
+      char band[] = "Rolling Soarscapes";
       store.push_back(std::cref(band));
       band[9] = 'c'; // Changing str affects the output.
       std::string result = fmt::vformat("{}", store);

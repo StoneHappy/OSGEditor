@@ -1,7 +1,9 @@
-#include <iostream>
-#include <Core/Base/macro.h>
-using namespace Soarscape;
+#include <Engine.h>
+#include <Editor.h>
 int main(int argc, char *argv[])
 {
-	LOG_INFO("test")
+    Soarscape::PublicSingleton<Soarscape::Engine>::getInstance().startEngine(argc, argv);
+    Soarscape::PublicSingleton<Soarscape::Editor>::getInstance().initialize(argc, argv);
+    Soarscape::PublicSingleton<Soarscape::Editor>::getInstance().run();
+    Soarscape::PublicSingleton<Soarscape::Engine>::getInstance().shutdownEngine();
 }
