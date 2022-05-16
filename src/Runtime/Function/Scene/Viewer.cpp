@@ -18,9 +18,10 @@ namespace Soarscape
         m_Viewer->getCamera()->setClearColor(osg::Vec4(0.9f, 0.9f, 1.f, 1.f));
         float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
         m_Viewer->getCamera()->setProjectionMatrixAsPerspective(30.f, aspectRatio, 1.f, 1000.f);
+        m_Viewer->getCamera()->setViewMatrixAsLookAt({ 0, 0, 5 }, { 0, 0, 0 }, {0, 1, 0});
         osgGA::TrackballManipulator* manipulator = new osgGA::TrackballManipulator;
-        manipulator->setAllowThrow(false);
-        m_Viewer->setCameraManipulator(manipulator);
+        /*manipulator->setAllowThrow(false);
+        m_Viewer->setCameraManipulator(manipulator);*/
     }
 	void Viewer::addNode(osg::Node* node)
 	{

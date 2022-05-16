@@ -57,8 +57,31 @@ namespace Soarscape
 	}
 
 
+    bool EditorRendererWidget::event(QEvent* event)
+    {
+        bool handled = QOpenGLWidget::event(event);
+        this->update();
+        return handled;
+    }
+
     void EditorRendererWidget::mousePressEvent(QMouseEvent* event)
     {
+        unsigned int button = 0;
+        switch (event->button()) {
+        case Qt::LeftButton:
+            button = 1;
+            break;
+        case Qt::MiddleButton:
+            button = 2;
+            break;
+        case Qt::RightButton:
+            button = 3;
+            break;
+        default:
+            break;
+        }
+        this->getEventQueue()->mouseButtonPress(event->x(), event->y(), button);
+
         QKeyEvent* e = (QKeyEvent*)event;
         if (e->modifiers() == Qt::ShiftModifier)
         {
@@ -74,6 +97,8 @@ namespace Soarscape
 
     void EditorRendererWidget::mouseMoveEvent(QMouseEvent* event)
     {
+        this->getEventQueue()->mouseMotion(event->x(), event->y());
+
         QKeyEvent* e = (QKeyEvent*)event;
         if (e->modifiers() == Qt::ShiftModifier)
         {
@@ -95,6 +120,22 @@ namespace Soarscape
 
     void EditorRendererWidget::mouseReleaseEvent(QMouseEvent* event)
     {
+        unsigned int button = 0;
+        switch (event->button()) {
+        case Qt::LeftButton:
+            button = 1;
+            break;
+        case Qt::MiddleButton:
+            button = 2;
+            break;
+        case Qt::RightButton:
+            button = 3;
+            break;
+        default:
+            break;
+        }
+        this->getEventQueue()->mouseButtonRelease(event->x(), event->y(), button);
+
         QKeyEvent* e = (QKeyEvent*)event;
         if (e->modifiers() == Qt::ShiftModifier)
         {
@@ -104,6 +145,11 @@ namespace Soarscape
 
     void EditorRendererWidget::wheelEvent(QWheelEvent* event)
     {
+        int delta = event->delta();
+        osgGA::GUIEventAdapter::ScrollingMotion motion = delta > 0 ?
+            osgGA::GUIEventAdapter::SCROLL_UP : osgGA::GUIEventAdapter::SCROLL_DOWN;
+        this->getEventQueue()->mouseScroll(motion);
+
         m_MouseAngle->x = event->angleDelta().x();
         m_MouseAngle->y = event->angleDelta().y();
         PublicSingletonInstance(EventSystem).sendEvent("EditCamera_Zoom", (void*)m_MouseAngle.get());
@@ -125,13 +171,18 @@ namespace Soarscape
         osg::Matrixf proj = PublicSingletonInstance(Viewer).getCamera()->getProjectionMatrix();
         ImGuizmo::SetRect(x, y, width, height);
         glm::mat4 testMatrix = glm::mat4(1);
-        ImGuizmo::ViewManipulate(view.ptr(), 8.f, ImVec2(x + width - width * 0.1, 0), ImVec2(width * 0.1, width * 0.1), 0x10101010);
+        ImGuizmo::ViewManipulate(view.ptr(), 5.0f, ImVec2(x + width - width * 0.1, 0), ImVec2(width * 0.1, width * 0.1), 0x10101010);
         ImGuizmo::Manipulate(view.ptr(), proj.ptr(), ImGuizmo::OPERATION::ROTATE, ImGuizmo::LOCAL, glm::value_ptr(testMatrix));
         ImGui::Text("Hello");
         ImGui::Render();
         QtImGui::render();
         PublicSingletonInstance(Viewer).getCamera()->setViewMatrix(view);
         PublicSingletonInstance(Viewer).getCamera()->setProjectionMatrix(proj);
+    }
+    osgGA::EventQueue* EditorRendererWidget::getEventQueue()
+    {
+        osgGA::EventQueue* eventQueue = PublicSingletonInstance(Renderer).getGraphicsWindow()->getEventQueue();
+        return eventQueue;
     }
     void EditorRendererWidget::importMesh(const std::string filename)
     {

@@ -17,6 +17,7 @@ namespace Soarscape
 		void resizeGL(int w, int h) override;
 		void paintGL() override;
 		// Event handlers
+		virtual bool event(QEvent* event);
 		virtual void mousePressEvent(QMouseEvent* event) override;
 		virtual void mouseReleaseEvent(QMouseEvent* event) override;
 		virtual void mouseDoubleClickEvent(QMouseEvent* event) override;
@@ -30,6 +31,12 @@ namespace Soarscape
 		void importMesh(const std::string filename);
 	private:
 		void renderImGui();
+
+		osgGA::EventQueue* getEventQueue();
+
+		osg::ref_ptr<osgViewer::GraphicsWindowEmbedded> _mGraphicsWindow;
+		osg::ref_ptr<osgViewer::Viewer> _mViewer;
+
         /*osg::ref_ptr<osgViewer::GraphicsWindowEmbedded> m_GraphicsWindow;
         osg::ref_ptr<osgViewer::Viewer> m_Viewer;
 
