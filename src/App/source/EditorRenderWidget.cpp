@@ -21,6 +21,8 @@
 
 #include <Function/Scene/Viewer.h>
 #include <osg/Matrix>
+
+#include <Resource/Data/Implement/OSGGdalTexture.h>
 namespace Soarscape
 {
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
@@ -38,6 +40,11 @@ namespace Soarscape
         PublicSingleton<Engine>::getInstance().renderInitialize(this->x(), this->y(), this->width(), this->height());
         PublicSingleton<Engine>::getInstance().logicalInitialize();
         QtImGui::initialize(this);
+        OSGGdalTexture* gdaltexture = new OSGGdalTexture("E:/lena.jpg", OSGGdalTexture::ImageType::Image);
+        // 创建形状绘制
+        osg::ref_ptr<osg::ShapeDrawable> shape = new osg::ShapeDrawable(new osg::Box(osg::Vec3(0.0, 0.0, 0.0), 4.0, 1.0, 4.0));
+        gdaltexture->getOsgGeode()->addDrawable(shape.get());
+        PublicSingleton<Viewer>::getInstance().addCustomGeode(gdaltexture->getOsgGeode());
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)

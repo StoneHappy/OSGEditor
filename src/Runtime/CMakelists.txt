@@ -36,6 +36,8 @@ target_link_libraries(${TARGET_NAME} PUBLIC
           ${OSGFX_LIBRARIES}
           ${OSGPARTICLE_LIBRARIES}
           ${OSGANIMATION_LIBRARIES}
+
+          ${GDAL_LIBRARIES}
           )
 
           
@@ -44,4 +46,5 @@ target_include_directories(
   PUBLIC 
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/>
   $<BUILD_INTERFACE:${OSG_INCLUDE_DIR}/>
+  $<BUILD_INTERFACE:${GDAL_INCLUDE_DIRS}/>
 )
