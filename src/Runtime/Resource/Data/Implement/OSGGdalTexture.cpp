@@ -1,6 +1,5 @@
 #include "OSGGdalTexture.h"
 #include <osg/Material>
-#include <osg/Texture2D>
 
 #include <osgDB/ReadFile>
 #include <Core/Base/macro.h>
@@ -13,7 +12,8 @@
 namespace Soarscape
 {
 	OSGGdalTexture::OSGGdalTexture(const std::string& filename, ImageType type)
-		: m_Geode(new osg::Geode), m_Image(new osg::Image)
+		: m_Geode(new osg::Geode), m_ImageRGBA(new osg::Image), m_ImageRed(new osg::Image), m_ImageGreen(new osg::Image), m_ImageBlue(new osg::Image),
+		m_Texture2DRGBA(new osg::Texture2D), m_Texture2DRed(new osg::Texture2D),m_Texture2DGreen(new osg::Texture2D), m_Texture2DBlue(new osg::Texture2D)
 	{
 		/*auto pointPos = filename.find_last_of(".");
 		auto lPos = filename.find_last_of("/");
@@ -40,13 +40,12 @@ namespace Soarscape
 
 		/*osg::ref_ptr<osg::Texture2D> texture2D = new osg::Texture2D;
 		osg::ref_ptr<osg::Image>	 image = osgDB::readImageFile(filename);*/
-		osg::ref_ptr<osg::Texture2D> texture2D = new osg::Texture2D;
-		if (m_Image && m_Image->valid()) { texture2D->setImage(m_Image); }
+		m_Texture2DRGBA = new osg::Texture2D;
+		if (m_ImageRGBA && m_ImageRGBA->valid()) { m_Texture2DRGBA->setImage(m_ImageRGBA); }
 
 		// 创建叶子结点并指定属性
 		m_Geode->getOrCreateStateSet()->setAttributeAndModes(material.get(), osg::StateAttribute::ON);
-		m_Geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, texture2D.get(), osg::StateAttribute::ON);	// 开启设置图片纹理
-		m_Geode->getOrCreateStateSet()->setMode(GL_BLEND, osg::StateAttribute::ON);								// 开启透明度
+		m_Geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, m_Texture2DRGBA.get(), osg::StateAttribute::ON);	// 开启设置图片纹理
 		m_Geode->getOrCreateStateSet()->setMode(GL_DEPTH_TEST, osg::StateAttribute::ON);							// 开启深度测试(顺序渲染层级)
 	}
 
@@ -68,8 +67,8 @@ namespace Soarscape
 			LOG_ERROR("gdal can't open {0}", filename);
 			return;
 		}
-		int width = GDALGetRasterXSize(poDataset);
-		int height = GDALGetRasterYSize(poDataset);
+		width = GDALGetRasterXSize(poDataset);
+		height = GDALGetRasterYSize(poDataset);
 
 		GDALRasterBand* poBand;
 		int             nBlockXSize, nBlockYSize;
@@ -77,42 +76,74 @@ namespace Soarscape
 		double          adfMinMax[2];
 		int numbands = poDataset->GetRasterCount();
 
-		// yay stack allocation -- replace with dynamic in the future
-		unsigned char** data;
-		unsigned char* packeddata;
-
-		data = new unsigned char* [numbands];
-		packeddata = new unsigned char[4 * width * height];
-
+		m_Data = new unsigned char* [numbands];
+		m_PackedDataRGBA = new unsigned char[4 * width * height];
+		m_PackedDataRed = new unsigned char[4 * width * height];
+		m_PackedDataGreen = new unsigned char[4 * width * height];
+		m_PackedDataBlue = new unsigned char[4 * width * height];
+		memset(m_PackedDataRGBA, 0, 4 * width * height * sizeof(unsigned char));
+		memset(m_PackedDataRed, 0, 4 * width * height * sizeof(unsigned char));
+		memset(m_PackedDataGreen, 0, 4 * width * height * sizeof(unsigned char));
+		memset(m_PackedDataBlue, 0, 4 * width * height * sizeof(unsigned char));
 		for (int i = 0; i < numbands; i++)
 		{
-			data[i] = new unsigned char[width * height];
+			m_Data[i] = new unsigned char[width * height];
 			GDALRasterBand* poBand;
 			poBand = poDataset->GetRasterBand(i + 1);
 			// Used unsiged ints for data type
-			poBand->RasterIO(GF_Read, 0, 0, width, height, data[i], width, height, GDT_Byte, 0, 0);
+			poBand->RasterIO(GF_Read, 0, 0, width, height, m_Data[i], width, height, GDT_Byte, 0, 0);
 		}
 
 		for (int i = 0; i < width * height; i++)
 		{
 			if (numbands == 4)
 			{
-				packeddata[i * 4] = data[0][i];
-				packeddata[i * 4 + 1] = data[1][i];
-				packeddata[i * 4 + 2] = data[2][i];
-				packeddata[i * 4 + 3] = data[3][i];
+				m_PackedDataRGBA[i * 4] = m_Data[0][i];
+				m_PackedDataRGBA[i * 4 + 1] = m_Data[1][i];
+				m_PackedDataRGBA[i * 4 + 2] = m_Data[2][i];
+				m_PackedDataRGBA[i * 4 + 3] = m_Data[2][i];
+
+				m_PackedDataRed[i * 4] = m_Data[0][i];
+				m_PackedDataGreen[i * 4 + 1] = m_Data[1][i];
+				m_PackedDataBlue[i * 4 + 2] = m_Data[2][i];
 			}
 			else if (numbands == 3)
 			{
-				packeddata[i * 4] = data[0][i];
-				packeddata[i * 4 + 1] = data[1][i];
-				packeddata[i * 4 + 2] = data[2][i];
-				packeddata[i * 4 + 3] = 255;
+				m_PackedDataRGBA[i * 4] = m_Data[0][i];
+				m_PackedDataRGBA[i * 4 + 1] = m_Data[1][i];
+				m_PackedDataRGBA[i * 4 + 2] = m_Data[2][i];
+				m_PackedDataRGBA[i * 4 + 3] = 255;
+
+				m_PackedDataRed[i * 4] = m_Data[0][i];
+				m_PackedDataGreen[i * 4 + 1] = m_Data[1][i];
+				m_PackedDataBlue[i * 4 + 2] = m_Data[2][i];
 			}
 		}
 
-		osg::ref_ptr<osg::Image> image = new osg::Image();
-		m_Image->setImage(width, height, 1, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, packeddata, osg::Image::USE_NEW_DELETE);
+		m_ImageRGBA->setImage(width, height, 1, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, m_PackedDataRGBA, osg::Image::USE_NEW_DELETE);
+		m_ImageRed->setImage(width, height, 1, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, m_PackedDataRed, osg::Image::USE_NEW_DELETE);
+		m_ImageGreen->setImage(width, height, 1, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, m_PackedDataGreen, osg::Image::USE_NEW_DELETE);
+		m_ImageBlue->setImage(width, height, 1, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, m_PackedDataBlue, osg::Image::USE_NEW_DELETE);
 
+		m_Texture2DRGBA->setImage(m_ImageRGBA);
+		m_Texture2DRed->setImage(m_ImageRed);
+		m_Texture2DGreen->setImage(m_ImageGreen);
+		m_Texture2DBlue->setImage(m_ImageBlue);
+	}
+
+	void OSGGdalTexture::setRed()
+	{
+		m_Texture2DRed->setImage(m_ImageRed);
+		m_Geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, m_Texture2DRed.get(), osg::StateAttribute::ON);
+	}
+	void OSGGdalTexture::setGreen()
+	{
+		m_Texture2DGreen->setImage(m_ImageGreen);
+		m_Geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, m_Texture2DGreen.get(), osg::StateAttribute::ON);
+	}
+	void OSGGdalTexture::setBlue()
+	{
+		m_Texture2DBlue->setImage(m_ImageBlue);
+		m_Geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, m_Texture2DBlue.get(), osg::StateAttribute::ON);
 	}
 }

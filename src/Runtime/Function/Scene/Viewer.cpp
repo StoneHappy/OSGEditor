@@ -69,10 +69,10 @@ namespace Soarscape
         if (m_CommonGeode.get() == nullptr) return;
         
         // create a debug scene - cylinder
-        osg::Cylinder* cylinder = new osg::Cylinder(osg::Vec3(0.f, 0.f, 0.f), 0.25f, 0.5f);
+        /*osg::Cylinder* cylinder = new osg::Cylinder(osg::Vec3(0.f, 0.f, 0.f), 0.25f, 0.5f);
         osg::ShapeDrawable* sd = new osg::ShapeDrawable(cylinder);
         sd->setColor(osg::Vec4(0.8f, 0.5f, 0.2f, 1.f));
-        m_CommonGeode->addDrawable(sd);
+        m_CommonGeode->addDrawable(sd);*/
         osg::StateSet* stateSet = m_CommonGeode->getOrCreateStateSet();
         osg::Material* material = new osg::Material;
         material->setColorMode(osg::Material::AMBIENT_AND_DIFFUSE);

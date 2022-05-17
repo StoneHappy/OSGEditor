@@ -38,5 +38,14 @@ namespace Soarscape
         ));
         m_RendererWidget->importMesh(fileName.toStdString());
     }
+
+    void MainWindow::keyPressEvent(QKeyEvent* event)
+    {
+        m_RendererWidget->keyPressEvent(event);
+    }
+    void MainWindow::keyReleaseEvent(QKeyEvent* event)
+    {
+        m_RendererWidget->keyReleaseEvent(event);
+    }
 }
 

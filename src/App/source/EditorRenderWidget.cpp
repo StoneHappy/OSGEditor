@@ -25,6 +25,7 @@
 #include <Resource/Data/Implement/OSGGdalTexture.h>
 namespace Soarscape
 {
+    OSGGdalTexture* gdaltexture;
 	EditorRendererWidget::EditorRendererWidget(QWidget* parent)
 		: QOpenGLWidget(parent), m_MousePos(std::make_shared<MousePos>(0.0f, 0.0f)), m_MouseAngle(std::make_shared<MouseAngle>(0.0f, 0.0f))
     {
@@ -40,10 +41,10 @@ namespace Soarscape
         PublicSingleton<Engine>::getInstance().renderInitialize(this->x(), this->y(), this->width(), this->height());
         PublicSingleton<Engine>::getInstance().logicalInitialize();
         QtImGui::initialize(this);
-        OSGGdalTexture* gdaltexture = new OSGGdalTexture("E:/lena.jpg", OSGGdalTexture::ImageType::Image);
+        gdaltexture = new OSGGdalTexture("D:/codes/gdal_projs/OpenGL-and-GDAL-Tutorials/data/satellite/res.tif", OSGGdalTexture::ImageType::Image);
         // 创建形状绘制
-        osg::ref_ptr<osg::ShapeDrawable> shape = new osg::ShapeDrawable(new osg::Box(osg::Vec3(0.0, 0.0, 0.0), 4.0, 1.0, 4.0));
-        gdaltexture->getOsgGeode()->addDrawable(shape.get());
+        auto quad = osg::createTexturedQuadGeometry(osg::Vec3(-0.5, -0.5, 0), osg::Vec3(1.0f, 0.0f, 0.0f), osg::Vec3(0.0f, 1.0f, 0.0f));
+        gdaltexture->getOsgGeode()->addDrawable(quad);
         PublicSingleton<Viewer>::getInstance().addCustomGeode(gdaltexture->getOsgGeode());
 	}
 
@@ -160,6 +161,27 @@ namespace Soarscape
         m_MouseAngle->x = event->angleDelta().x();
         m_MouseAngle->y = event->angleDelta().y();
         PublicSingletonInstance(EventSystem).sendEvent("EditCamera_Zoom", (void*)m_MouseAngle.get());
+    }
+
+    void EditorRendererWidget::keyPressEvent(QKeyEvent* event)
+    {
+        
+    }
+
+    void EditorRendererWidget::keyReleaseEvent(QKeyEvent* event)
+    {
+        if (event->key() == Qt::Key_R)
+        {
+            gdaltexture->setRed();
+        }
+        else if (event->key() == Qt::Key_G)
+        {
+            gdaltexture->setGreen();
+        }
+        else if (event->key() == Qt::Key_B)
+        {
+            gdaltexture->setBlue();
+        }
     }
 
     void EditorRendererWidget::renderImGui()

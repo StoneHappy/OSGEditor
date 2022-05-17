@@ -16,6 +16,10 @@ namespace Soarscape
     public:
         MainWindow(QWidget* parent = nullptr);
         ~MainWindow();
+
+        virtual void keyPressEvent(QKeyEvent* event) override;
+        virtual void keyReleaseEvent(QKeyEvent* event) override;
+
     public Q_SLOTS:
         void importMesh();
 
