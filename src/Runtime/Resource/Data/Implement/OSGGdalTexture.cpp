@@ -133,17 +133,18 @@ namespace Soarscape
 
 	void OSGGdalTexture::setRed()
 	{
-		m_Texture2DRed->setImage(m_ImageRed);
 		m_Geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, m_Texture2DRed.get(), osg::StateAttribute::ON);
 	}
 	void OSGGdalTexture::setGreen()
 	{
-		m_Texture2DGreen->setImage(m_ImageGreen);
 		m_Geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, m_Texture2DGreen.get(), osg::StateAttribute::ON);
 	}
 	void OSGGdalTexture::setBlue()
 	{
-		m_Texture2DBlue->setImage(m_ImageBlue);
 		m_Geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, m_Texture2DBlue.get(), osg::StateAttribute::ON);
+	}
+	void OSGGdalTexture::setRGBA()
+	{
+		m_Geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, m_Texture2DRGBA.get(), osg::StateAttribute::ON);
 	}
 }

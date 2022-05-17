@@ -170,17 +170,22 @@ namespace Soarscape
 
     void EditorRendererWidget::keyReleaseEvent(QKeyEvent* event)
     {
-        if (event->key() == Qt::Key_R)
+        switch (event->key())
         {
+        case Qt::Key_R:
             gdaltexture->setRed();
-        }
-        else if (event->key() == Qt::Key_G)
-        {
+            break;
+        case Qt::Key_G:
             gdaltexture->setGreen();
-        }
-        else if (event->key() == Qt::Key_B)
-        {
+            break;
+        case Qt::Key_B:
             gdaltexture->setBlue();
+            break;
+        case Qt::Key_A:
+            gdaltexture->setRGBA();
+            break;
+        default:
+            break;
         }
     }
 
@@ -201,7 +206,7 @@ namespace Soarscape
         ImGuizmo::SetRect(x, y, width, height);
         glm::mat4 testMatrix = glm::mat4(1);
         ImGuizmo::ViewManipulate(view.ptr(), 5.0f, ImVec2(x + width - width * 0.1, 0), ImVec2(width * 0.1, width * 0.1), 0x10101010);
-        ImGuizmo::Manipulate(view.ptr(), proj.ptr(), ImGuizmo::OPERATION::ROTATE, ImGuizmo::LOCAL, glm::value_ptr(testMatrix));
+        //ImGuizmo::Manipulate(view.ptr(), proj.ptr(), ImGuizmo::OPERATION::ROTATE, ImGuizmo::LOCAL, glm::value_ptr(testMatrix));
         ImGui::Text("Hello");
         ImGui::Render();
         QtImGui::render();

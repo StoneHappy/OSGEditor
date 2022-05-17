@@ -24,6 +24,7 @@ namespace Soarscape
 		void setRed();
 		void setGreen();
 		void setBlue();
+		void setRGBA();
 	private:
 
 		void loadHeightField(const std::string& filename);
