@@ -6,8 +6,11 @@
 
 #include "Function/Render/Renderer.h"
 
+#include "Function/HUD/HUD.h"
+
 #include "Core/Base/macro.h"
 #include <thread>
+
 namespace Soarscape
 {
     void Engine::startEngine(int argc, char* argv[])
@@ -28,6 +31,7 @@ namespace Soarscape
     void Engine::renderInitialize(int x, int y, int width, int height)
     {
         PublicSingleton<Renderer>::getInstance().initialize(x, y, width, height);
+        PublicSingleton<HUD>::getInstance();
     }
     void Engine::logicalInitialize()
     {

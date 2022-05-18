@@ -3,6 +3,7 @@
 #include <osg/Material>
 #include <osgGA/TrackballManipulator>
 #include "Function/Scene/Viewer.h"
+#include "Function/HUD/HUD.h"
 #include "Core/Base/macro.h"
 namespace Soarscape
 {

@@ -20,6 +20,7 @@
 #include <osgGA/TrackballManipulator>
 
 #include <Function/Scene/Viewer.h>
+#include <Function/HUD/HUD.h>
 #include <osg/Matrix>
 
 #include <Resource/Data/Implement/OSGGdalTexture.h>
@@ -51,6 +52,7 @@ namespace Soarscape
 	void EditorRendererWidget::resizeGL(int w, int h)
 	{
         PublicSingleton<Renderer>::getInstance().resize(this->x(), this->y(), w, h);
+        PublicSingleton<HUD>::getInstance().onResize(w, h);
 	}
 
 	void EditorRendererWidget::paintGL()
