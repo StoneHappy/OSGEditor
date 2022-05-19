@@ -92,6 +92,7 @@ namespace Soarscape
         }
         this->getEventQueue()->mouseButtonPress(event->x(), event->y(), button);
 
+        PublicSingleton<HUD>::getInstance().selectQuad->begin(event->x(), event->y());
         QKeyEvent* e = (QKeyEvent*)event;
         if (e->modifiers() == Qt::ShiftModifier)
         {
@@ -108,6 +109,7 @@ namespace Soarscape
     void EditorRendererWidget::mouseMoveEvent(QMouseEvent* event)
     {
         this->getEventQueue()->mouseMotion(event->x(), event->y());
+        PublicSingleton<HUD>::getInstance().selectQuad->end(event->x(), event->y());
 
         QKeyEvent* e = (QKeyEvent*)event;
         if (e->modifiers() == Qt::ShiftModifier)

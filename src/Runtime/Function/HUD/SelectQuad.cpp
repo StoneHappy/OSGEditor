@@ -38,8 +38,28 @@ namespace Soarscape
 	}
 	void SelectQuad::begin(int x, int y)
 	{
+		xStart = x;
+		yStart = m_Height - y;
 	}
 	void SelectQuad::end(int x, int y)
 	{
+		//获取顶点、更新顶点
+		osg::Vec3Array* vertices = (osg::Vec3Array*)m_QuadGeometry->getVertexArray();
+
+		xEnd = x;
+		yEnd = m_Height - y;
+
+		float depth = -0.1;
+		vertices->at(0).set(xStart, yStart, depth);
+		vertices->at(1).set(xEnd, yStart, depth);
+		vertices->at(2).set(xEnd, yEnd, depth);
+		vertices->at(3).set(xStart, yEnd, depth);
+
+		m_QuadGeometry->dirtyDisplayList();
+	}
+	void SelectQuad::onReszie(float width, float height)
+	{
+		m_Width = width;
+		m_Height = height;
 	}
 }

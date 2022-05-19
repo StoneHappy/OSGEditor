@@ -33,7 +33,7 @@ namespace Soarscape
 	}
     void HUD::onResize(int width, int height)
     {
-        osg::Viewport* vp = PublicSingleton<Viewer>::getInstance().getCamera()->getViewport();
         m_HUDCamera->setProjectionMatrix(osg::Matrix::ortho2D(0, width, 0, height));
+        selectQuad->onReszie(width, height);
     }
 }
