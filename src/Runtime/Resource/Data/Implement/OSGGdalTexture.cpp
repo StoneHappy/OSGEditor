@@ -49,7 +49,7 @@ namespace Soarscape
 		m_Geode->getOrCreateStateSet()->setMode(GL_DEPTH_TEST, osg::StateAttribute::ON);							// ø™∆Ù…Ó∂»≤‚ ‘(À≥–Ú‰÷»æ≤„º∂)
 	}
 
-	osg::ref_ptr<osg::Geode> OSGGdalTexture::getOsgGeode()
+	osg::ref_ptr<osg::Geode> OSGGdalTexture::getOSGGeode()
 	{
 		return m_Geode;
 	}

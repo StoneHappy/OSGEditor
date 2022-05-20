@@ -24,6 +24,7 @@
 #include <osg/Matrix>
 
 #include <Resource/Data/Implement/OSGGdalTexture.h>
+#include <Resource/Data/Implement/VCGMesh.h>
 namespace Soarscape
 {
     OSGGdalTexture* gdaltexture;
@@ -45,8 +46,10 @@ namespace Soarscape
         gdaltexture = new OSGGdalTexture("D:/codes/gdal_projs/OpenGL-and-GDAL-Tutorials/data/satellite/res.tif", OSGGdalTexture::ImageType::Image);
         // 创建形状绘制
         auto quad = osg::createTexturedQuadGeometry(osg::Vec3(-0.5, -0.5, 0), osg::Vec3(1.0f, 0.0f, 0.0f), osg::Vec3(0.0f, 1.0f, 0.0f));
-        gdaltexture->getOsgGeode()->addDrawable(quad);
-        PublicSingleton<Viewer>::getInstance().addCustomGeode(gdaltexture->getOsgGeode());
+        gdaltexture->getOSGGeode()->addDrawable(quad);
+        PublicSingleton<Viewer>::getInstance().addCustomGeode(gdaltexture->getOSGGeode());
+        VCGMesh* mesh = new VCGMesh("D:/datas/ply/bunny.ply");
+        PublicSingleton<Viewer>::getInstance().addCustomGeode(mesh->getOSGGeode());
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)

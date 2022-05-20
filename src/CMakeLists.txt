@@ -9,6 +9,9 @@ find_package(OpenSceneGraph 3.6.0 REQUIRED osgDB osgGA osgUtil osgText osgViewer
 ######################### GDAL ######################################
 find_package(GDAL REQUIRED)
 
+####################### opengl #####################################
+find_package(OpenGL REQUIRED)
+
 add_subdirectory(Vendors)
 add_subdirectory(Runtime)
 add_subdirectory(App)

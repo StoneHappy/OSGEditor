@@ -18,8 +18,7 @@ target_compile_options(${TARGET_NAME} PUBLIC "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:
 target_link_libraries(${TARGET_NAME} PUBLIC
           spdlog::spdlog
           ENTT
-          vcglib
-          vcgwrap
+          
           glm
           ${OSG_LIBRARIES} 
           ${OSGVIEWER_LIBRARIES}
@@ -38,6 +37,10 @@ target_link_libraries(${TARGET_NAME} PUBLIC
           ${OSGANIMATION_LIBRARIES}
 
           ${GDAL_LIBRARIES}
+
+          vcglib
+          vcgwrap
+          ${OPENGL_LIBRARIES}
           )
 
           

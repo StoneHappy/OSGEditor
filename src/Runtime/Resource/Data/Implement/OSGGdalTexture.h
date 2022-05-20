@@ -3,6 +3,8 @@
 
 #include <osg/Geode>
 #include <osg/Texture2D>
+
+#include "Resource/Data/Implement/VCGMesh.h"
 namespace Soarscape
 {
 	class OSGGdalTexture
@@ -17,7 +19,7 @@ namespace Soarscape
 
 		OSGGdalTexture(const std::string& filename, ImageType type);
 
-		osg::ref_ptr<osg::Geode> getOsgGeode();
+		osg::ref_ptr<osg::Geode> getOSGGeode();
 
 		int width, height;
 
@@ -47,5 +49,7 @@ namespace Soarscape
 		unsigned char* m_PackedDataRed;
 		unsigned char* m_PackedDataGreen;
 		unsigned char* m_PackedDataBlue;
+
+		VCGMesh m_GridMesh;
 	};
 }
