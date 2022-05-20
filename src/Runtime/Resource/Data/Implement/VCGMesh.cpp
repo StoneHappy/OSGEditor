@@ -7,6 +7,10 @@
 
 namespace Soarscape
 {
+	VCGMesh::VCGMesh()
+	{
+		init();
+	}
 	VCGMesh::VCGMesh(const std::string& filename)
 	{
 		init();

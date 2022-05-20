@@ -27,11 +27,14 @@ namespace Soarscape
 		void setGreen();
 		void setBlue();
 		void setRGBA();
+
+		VCGMesh m_GridMesh;
 	private:
 
 		void loadHeightField(const std::string& filename);
 		void loadImage(const std::string& filename);
 
+		void initGridMesh();
 		
 		osg::ref_ptr<osg::Geode> m_Geode;
 
@@ -50,6 +53,5 @@ namespace Soarscape
 		unsigned char* m_PackedDataGreen;
 		unsigned char* m_PackedDataBlue;
 
-		VCGMesh m_GridMesh;
 	};
 }

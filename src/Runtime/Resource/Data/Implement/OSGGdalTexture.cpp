@@ -9,11 +9,13 @@
 #include <gdalwarper.h>
 #include <ogrsf_frmts.h>
 
+#include<vcg/complex/algorithms/create/platonic.h>
+
 namespace Soarscape
 {
 	OSGGdalTexture::OSGGdalTexture(const std::string& filename, ImageType type)
 		: m_Geode(new osg::Geode), m_ImageRGBA(new osg::Image), m_ImageRed(new osg::Image), m_ImageGreen(new osg::Image), m_ImageBlue(new osg::Image),
-		m_Texture2DRGBA(new osg::Texture2D), m_Texture2DRed(new osg::Texture2D),m_Texture2DGreen(new osg::Texture2D), m_Texture2DBlue(new osg::Texture2D)
+		m_Texture2DRGBA(new osg::Texture2D), m_Texture2DRed(new osg::Texture2D), m_Texture2DGreen(new osg::Texture2D), m_Texture2DBlue(new osg::Texture2D)
 	{
 		/*auto pointPos = filename.find_last_of(".");
 		auto lPos = filename.find_last_of("/");
@@ -30,7 +32,7 @@ namespace Soarscape
 		{
 			loadImage(filename);
 		}
-		
+
 		// 创建材料属性
 		osg::ref_ptr<osg::Material> material = new osg::Material;
 		material->setAmbient(osg::Material::Face::FRONT_AND_BACK, osg::Vec4f(0.5, 1.0, 1.0, 1));	// 设置全景光
@@ -47,6 +49,7 @@ namespace Soarscape
 		m_Geode->getOrCreateStateSet()->setAttributeAndModes(material.get(), osg::StateAttribute::ON);
 		m_Geode->getOrCreateStateSet()->setTextureAttributeAndModes(0, m_Texture2DRGBA.get(), osg::StateAttribute::ON);	// 开启设置图片纹理
 		m_Geode->getOrCreateStateSet()->setMode(GL_DEPTH_TEST, osg::StateAttribute::ON);							// 开启深度测试(顺序渲染层级)
+		initGridMesh();
 	}
 
 	osg::ref_ptr<osg::Geode> OSGGdalTexture::getOSGGeode()
@@ -55,7 +58,6 @@ namespace Soarscape
 	}
 	void OSGGdalTexture::loadHeightField(const std::string& filename)
 	{
-
 	}
 	void OSGGdalTexture::loadImage(const std::string& filename)
 	{
@@ -129,6 +131,41 @@ namespace Soarscape
 		m_Texture2DRed->setImage(m_ImageRed);
 		m_Texture2DGreen->setImage(m_ImageGreen);
 		m_Texture2DBlue->setImage(m_ImageBlue);
+	}
+
+	void OSGGdalTexture::initGridMesh()
+	{
+		std::vector<vcg::Point3f> vertices;
+		std::vector<vcg::Point3i> indices;
+
+		float nwidth = (float)width / (float)(width > height ? width : height);
+		float nheight = (float) height / (float)(width > height ? width : height);
+		LOG_DEBUG("nwidth: {0} nheight: {1}", nwidth, nheight);
+		float divide = 50;
+		float stepx = nwidth / divide;
+		float stepy = nheight / divide;
+		for (float i = -nwidth * 0.5; i < nwidth * 0.5; i += stepx)
+		{
+			for (float j = -nheight * 0.5; j < nheight * 0.5; j += stepy)
+			{
+				//LOG_DEBUG("stepx: {0} stepy: {1}", stepx, stepy);
+				vertices.push_back(vcg::Point3f(i, j, 0));
+				vertices.push_back(vcg::Point3f(i + stepx, j, 0));
+				vertices.push_back(vcg::Point3f(i, j + stepy, 0));
+				vertices.push_back(vcg::Point3f(i + stepx, j + stepy, 0));
+				indices.push_back(vcg::Point3i(vertices.size() - 4, vertices.size() - 1, vertices.size() - 2));
+				indices.push_back(vcg::Point3i(vertices.size() - 4, vertices.size() - 3, vertices.size() - 1));
+			}
+		}
+		/*vertices.push_back(vcg::Point3f(-nwidth * 0.5, -nheight * 0.5, 0));
+		vertices.push_back(vcg::Point3f( -nwidth * 0.5, nheight * 0.5, 0));
+		vertices.push_back(vcg::Point3f(nwidth * 0.5, -nheight * 0.5, 0));
+		vertices.push_back(vcg::Point3f(nwidth * 0.5, nheight * 0.5, 0));
+		indices.push_back(vcg::Point3i(vertices.size() - 4, vertices.size() - 1, vertices.size() - 2));
+		indices.push_back(vcg::Point3i(vertices.size() - 4, vertices.size() - 3, vertices.size() - 1));*/
+
+		vcg::tri::BuildMeshFromCoordVectorIndexVector(m_GridMesh.m_Mesh, vertices, indices);
+		m_GridMesh.update();
 	}
 
 	void OSGGdalTexture::setRed()

@@ -34,7 +34,7 @@ namespace Soarscape
 	public:
 		BaseTriMesh m_Mesh;
 	public:
-		VCGMesh() = default;
+		VCGMesh();
 		VCGMesh(const std::string& filename);
 
 		virtual ~VCGMesh() = default;

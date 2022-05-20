@@ -45,11 +45,13 @@ namespace Soarscape
         QtImGui::initialize(this);
         gdaltexture = new OSGGdalTexture("D:/codes/gdal_projs/OpenGL-and-GDAL-Tutorials/data/satellite/res.tif", OSGGdalTexture::ImageType::Image);
         // 创建形状绘制
-        auto quad = osg::createTexturedQuadGeometry(osg::Vec3(-0.5, -0.5, 0), osg::Vec3(1.0f, 0.0f, 0.0f), osg::Vec3(0.0f, 1.0f, 0.0f));
+        float width = (float)gdaltexture->width / (float)(gdaltexture->width > gdaltexture->height ? gdaltexture->width : gdaltexture->height);
+        float height = (float)gdaltexture->height / (float)(gdaltexture->width > gdaltexture->height ? gdaltexture->width : gdaltexture->height);
+        auto quad = osg::createTexturedQuadGeometry(osg::Vec3(-width * 0.5, -height * 0.5, 0), osg::Vec3(width, 0.0f, 0.0f), osg::Vec3(0.0f, height, 0.0f));
+        LOG_DEBUG("nwidth: {0} nheight: {1}", width, height);
         gdaltexture->getOSGGeode()->addDrawable(quad);
         PublicSingleton<Viewer>::getInstance().addCustomGeode(gdaltexture->getOSGGeode());
-        VCGMesh* mesh = new VCGMesh("D:/datas/ply/bunny.ply");
-        PublicSingleton<Viewer>::getInstance().addCustomGeode(mesh->getOSGGeode());
+        PublicSingleton<Viewer>::getInstance().addCustomGeode(gdaltexture->m_GridMesh.getOSGGeode());
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
