@@ -12,6 +12,8 @@ find_package(GDAL REQUIRED)
 ####################### opengl #####################################
 find_package(OpenGL REQUIRED)
 
+find_package(libheif CONFIG REQUIRED)
+
 add_subdirectory(Vendors)
 add_subdirectory(Runtime)
 add_subdirectory(App)

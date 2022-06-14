@@ -22,7 +22,7 @@
 #include <Function/Scene/Viewer.h>
 #include <Function/HUD/HUD.h>
 #include <osg/Matrix>
-
+#include <osgDB/ReadFile>
 #include <Resource/Data/Implement/OSGGdalTexture.h>
 #include <Resource/Data/Implement/VCGMesh.h>
 namespace Soarscape
@@ -43,21 +43,21 @@ namespace Soarscape
         PublicSingleton<Engine>::getInstance().renderInitialize(this->x(), this->y(), this->width(), this->height());
         PublicSingleton<Engine>::getInstance().logicalInitialize();
         QtImGui::initialize(this);
-        gdaltexture = new OSGGdalTexture("D:/codes/gdal_projs/OpenGL-and-GDAL-Tutorials/data/satellite/res.tif", OSGGdalTexture::ImageType::Image);
-        // 创建形状绘制
-        float width = (float)gdaltexture->width / (float)(gdaltexture->width > gdaltexture->height ? gdaltexture->width : gdaltexture->height);
-        float height = (float)gdaltexture->height / (float)(gdaltexture->width > gdaltexture->height ? gdaltexture->width : gdaltexture->height);
-        auto quad = osg::createTexturedQuadGeometry(osg::Vec3(-width * 0.5, -height * 0.5, 0), osg::Vec3(width, 0.0f, 0.0f), osg::Vec3(0.0f, height, 0.0f));
-        LOG_DEBUG("nwidth: {0} nheight: {1}", width, height);
-        gdaltexture->getOSGGeode()->addDrawable(quad);
-        PublicSingleton<Viewer>::getInstance().addCustomGeode(gdaltexture->getOSGGeode());
-        PublicSingleton<Viewer>::getInstance().addCustomGeode(gdaltexture->m_GridMesh.getOSGGeode());
+        //gdaltexture = new OSGGdalTexture("D:/codes/gdal_projs/OpenGL-and-GDAL-Tutorials/data/satellite/res.tif", OSGGdalTexture::ImageType::Image);
+        //// 创建形状绘制
+        //float width = (float)gdaltexture->width / (float)(gdaltexture->width > gdaltexture->height ? gdaltexture->width : gdaltexture->height);
+        //float height = (float)gdaltexture->height / (float)(gdaltexture->width > gdaltexture->height ? gdaltexture->width : gdaltexture->height);
+        //auto quad = osg::createTexturedQuadGeometry(osg::Vec3(-width * 0.5, -height * 0.5, 0), osg::Vec3(width, 0.0f, 0.0f), osg::Vec3(0.0f, height, 0.0f));
+        //LOG_DEBUG("nwidth: {0} nheight: {1}", width, height);
+        //gdaltexture->getOSGGeode()->addDrawable(quad);
+        //PublicSingleton<Viewer>::getInstance().addCustomGeode(gdaltexture->getOSGGeode());
+        //PublicSingleton<Viewer>::getInstance().addCustomGeode(gdaltexture->m_GridMesh.getOSGGeode());
 	}
 
 	void EditorRendererWidget::resizeGL(int w, int h)
 	{
         PublicSingleton<Renderer>::getInstance().resize(this->x(), this->y(), w, h);
-        PublicSingleton<HUD>::getInstance().onResize(w, h);
+        //PublicSingleton<HUD>::getInstance().onResize(w, h);
 	}
 
 	void EditorRendererWidget::paintGL()
@@ -97,7 +97,7 @@ namespace Soarscape
         }
         this->getEventQueue()->mouseButtonPress(event->x(), event->y(), button);
 
-        PublicSingleton<HUD>::getInstance().selectQuad->begin(event->x(), event->y());
+        //PublicSingleton<HUD>::getInstance().selectQuad->begin(event->x(), event->y());
         QKeyEvent* e = (QKeyEvent*)event;
         if (e->modifiers() == Qt::ShiftModifier)
         {
@@ -114,7 +114,7 @@ namespace Soarscape
     void EditorRendererWidget::mouseMoveEvent(QMouseEvent* event)
     {
         this->getEventQueue()->mouseMotion(event->x(), event->y());
-        PublicSingleton<HUD>::getInstance().selectQuad->end(event->x(), event->y());
+        //PublicSingleton<HUD>::getInstance().selectQuad->end(event->x(), event->y());
 
         QKeyEvent* e = (QKeyEvent*)event;
         if (e->modifiers() == Qt::ShiftModifier)
