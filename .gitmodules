@@ -1,0 +1,3 @@
+[submodule "src/Vendors/osg_plugin_heic"]
+	path = src/Vendors/osg_plugin_heic
+	url = https://github.com/StoneHappy/osg_plugin_heic.git

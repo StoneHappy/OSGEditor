@@ -3,6 +3,7 @@
 #include <osg/Material>
 #include <osgGA/TrackballManipulator>
 #include <osgDB/ReadFile>
+#include <osgDB/WriteFile>
 #include <osg/Texture2D>
 #include <libheif/heif.h>
 #include <vector>
@@ -15,66 +16,29 @@ namespace Soarscape
 	{
         m_Viewer->setThreadingModel(osgViewer::Viewer::SingleThreaded);
         m_RootGroup->addChild(m_CommonGeode);
+#if 0
+        auto node = osgDB::readNodeFile("D:/codes/OSGEditor/out/bin/test.osgb");
+        m_RootGroup->addChild(node);
+        m_Viewer->setSceneData(m_RootGroup);
+        setupCommonGeode();
+#endif
+#if 1
         auto node = osgDB::readNodeFile("D:/data/osgb/Tile_0015_0047_0022_DC.osgb");
         auto geode = node->asGeode();
         auto drawable = geode->getDrawable(0);
         osg::Texture2D* texture = new osg::Texture2D;
         const char* filename = "D:/data/imgs/Tile_0015_0047_0022_DC_0000.heic";
-        heif_context* ctx = heif_context_alloc();
-        LIBHEIF_TEST_ERROR(heif_context_read_from_file(ctx, filename, nullptr).code, "File read error!")
-
-        // get a handle to the primary image
-        heif_image_handle* handle;
-        LIBHEIF_TEST_ERROR(heif_context_get_primary_image_handle(ctx, &handle).code, "Get image handle error")
-
-        // decode the image and convert colorspace to RGB, saved as 24bit interleaved
-        heif_image* img;
-        LIBHEIF_TEST_ERROR(heif_decode_image(handle, &img, heif_colorspace_RGB, heif_chroma_interleaved_RGB, nullptr).code, "Decode image error")
-
-        auto width = heif_image_get_primary_width(img);
-        auto height = heif_image_get_primary_height(img);
-
-        std::cout << "Get image info: " << std::endl;
-        std::cout << "width: " << width << std::endl;
-        std::cout << "height: " << height << std::endl;
-
-        int stride;
-        uint8_t* data = heif_image_get_plane(img, heif_channel_interleaved, &stride);
-        uint8_t* reservedata = new uint8_t[stride * height];
-        //memcpy(reservedata, data, sizeof(uint8_t) * stride * height);
-
-        
-        for (size_t i = 0; i < stride; i++)
-        {
-            for (size_t j = 0; j < height; j++)
-            {
-                int index1 = i + j * stride;
-                int index2 = i + (height - 1 - j) * stride;
-                reservedata[index1] = data[index2];
-            }
-        }
-        /*for (size_t i = 0; i < height; i++)
-        {
-            for (size_t j = 0; j < width; j++)
-            {
-                size_t index1 = j + i * (width - 1);
-                reservedata[index1] = data[index1];
-            }
-        }*/
-        osg::Image* osgimage = new osg::Image;
-
-        osgimage->setImage(width, height, 1, GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, reservedata, osg::Image::USE_NEW_DELETE);
-        if (stride == NULL)
-        {
-            std::cout << "Get image data error!" << std::endl;
-        }
-
-        std::cout << "Read image successfully!" << std::endl;
+        auto osgimage = osgDB::readImageFile(filename);
         texture->setImage(osgimage);
         drawable->getOrCreateStateSet()->setTextureAttributeAndModes(0, texture, osg::StateAttribute::ON);
         m_RootGroup->addChild(node);
 		m_Viewer->setSceneData(m_RootGroup);
         setupCommonGeode();
+        osg::ref_ptr<osgDB::ReaderWriter::Options> options = new osgDB::ReaderWriter::Options;
+        options->setOptionString("WriteImageHint=IncludeFile");   // Export option: Hint of writing image to stream: <IncludeData> writes Image::data() directly; <IncludeFile> writes the image file itself to stream; <UseExternal> writes 
+        osgDB::writeNodeFile(*node, "test.osgb", options);
+        osgDB::writeNodeFile(*node, "test.osgt", options);
+#endif
 	}
     void Viewer::initialize(int x, int y, int width, int height)
     {
