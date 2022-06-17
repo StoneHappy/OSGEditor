@@ -7,6 +7,7 @@
 #include <osg/Texture2D>
 #include <libheif/heif.h>
 #include <vector>
+#include <Core/Base/macro.h>
 
 #define LIBHEIF_TEST_ERROR(func, ...) if ((func) != heif_error_code::heif_error_Ok) {std::cout << __VA_ARGS__ << std::endl;}
 namespace Soarscape
@@ -16,28 +17,41 @@ namespace Soarscape
 	{
         m_Viewer->setThreadingModel(osgViewer::Viewer::SingleThreaded);
         m_RootGroup->addChild(m_CommonGeode);
+        // 读取嵌入的图片
 #if 0
-        auto node = osgDB::readNodeFile("D:/codes/OSGEditor/out/bin/test.osgb");
+        const char* osgbfilename = "D:/data/osgb/test70.osgb";
+        LOG_DEBUG("osg: {0}", osgbfilename);
+        auto node = osgDB::readNodeFile(osgbfilename);
         m_RootGroup->addChild(node);
         m_Viewer->setSceneData(m_RootGroup);
         setupCommonGeode();
 #endif
+        // 把原始的jpeg拆出来
 #if 1
+        auto node = osgDB::readNodeFile("D:/data/osgb/Tile_0015_0047_0022_DC.osgb");
+        osgDB::writeNodeFile(*node, "testjpeg.osgt");
+        m_RootGroup->addChild(node);
+        m_Viewer->setSceneData(m_RootGroup);
+        setupCommonGeode();
+#endif
+        // 嵌入heic图片
+#if 0
         auto node = osgDB::readNodeFile("D:/data/osgb/Tile_0015_0047_0022_DC.osgb");
         auto geode = node->asGeode();
         auto drawable = geode->getDrawable(0);
         osg::Texture2D* texture = new osg::Texture2D;
-        const char* filename = "D:/data/imgs/Tile_0015_0047_0022_DC_0000.heic";
+        const char* filename = "D:/data/imgs/house40.heic";
         auto osgimage = osgDB::readImageFile(filename);
+        osgimage->setFileName(filename);
         texture->setImage(osgimage);
         drawable->getOrCreateStateSet()->setTextureAttributeAndModes(0, texture, osg::StateAttribute::ON);
         m_RootGroup->addChild(node);
-		m_Viewer->setSceneData(m_RootGroup);
+        m_Viewer->setSceneData(m_RootGroup);
         setupCommonGeode();
         osg::ref_ptr<osgDB::ReaderWriter::Options> options = new osgDB::ReaderWriter::Options;
         options->setOptionString("WriteImageHint=IncludeFile");   // Export option: Hint of writing image to stream: <IncludeData> writes Image::data() directly; <IncludeFile> writes the image file itself to stream; <UseExternal> writes 
-        osgDB::writeNodeFile(*node, "test.osgb", options);
-        osgDB::writeNodeFile(*node, "test.osgt", options);
+        osgDB::writeNodeFile(*node, "test40.osgb", options);
+        osgDB::writeNodeFile(*node, "test40.osgt", options);
 #endif
 	}
     void Viewer::initialize(int x, int y, int width, int height)
